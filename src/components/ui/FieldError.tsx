@@ -1,4 +1,4 @@
-import React from "react";
+
 import { BiSolidError } from "react-icons/bi";
 type Props = {
   children?: React.ReactNode;
