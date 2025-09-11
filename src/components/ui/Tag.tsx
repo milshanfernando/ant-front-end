@@ -1,4 +1,4 @@
-import React, { type HtmlHTMLAttributes } from "react";
+import { type HtmlHTMLAttributes } from "react";
 
 type Props = HtmlHTMLAttributes<HTMLDivElement> & {
   name: string;
