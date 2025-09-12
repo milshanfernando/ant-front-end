@@ -5,6 +5,7 @@ const Items = () => {
   const [page, setPage] = useState(1);
   const pageSize = 6;
   const { data, error, isLoading } = UseItems({ page, pageSize });
+
   const statusColors: { [key: string]: string } = {
     "in-stock": "bg-green-200 text-green-800",
     "out-of-stock": "bg-red-200 text-red-800",
@@ -15,42 +16,45 @@ const Items = () => {
   if (isLoading) return <div>Loading...</div>;
 
   return (
-    <div>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-5">
+    <div className="px-4 sm:px-6 max-w-7xl mx-auto">
+      {/* Items Grid */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-5 justify-items-center">
         {data?.map(({ name, image, status, quantity }, index: number) => (
           <div
-            className="border border-gray-600 dark:border-gray-400 rounded-md p-5 flex flex-col gap-3 max-w-60 coursor-pointer hover:bg-gray-100 dark:hover:bg-gray-900 transition-all duration-150 ease-in-out"
+            className="border border-gray-600 dark:border-gray-400 rounded-md p-5 flex flex-col gap-3 w-full max-w-xs cursor-pointer hover:bg-gray-100 dark:hover:bg-gray-900 transition-all duration-150 ease-in-out"
             key={index}
           >
-            <h2 className=" text-sm font-semibold first-letter:uppercase truncate max-w-[20ch] ">
+            <h2 className="text-sm sm:text-base font-semibold first-letter:uppercase truncate max-w-[20ch]">
               {name.toLowerCase()}
             </h2>
             <img
-              className=" h-2/3"
+              className="h-40 w-full object-cover rounded"
               src={typeof image === "string" ? image : undefined}
-              alt=""
+              alt={name}
             />
-            <div className="flex justify-between">
+            <div className="flex justify-between items-center">
               <p
-                className={`${statusColors[status]} px-2 rounded-full text-xs font-semibold text-center my-auto py-1`}
+                className={`${statusColors[status]} px-2 rounded-full text-xs sm:text-sm font-semibold text-center py-1`}
               >
                 {status.toUpperCase()}
               </p>
-              <p>{quantity}</p>
+              <p className="font-medium">{quantity}</p>
             </div>
           </div>
         ))}
       </div>
-      <div className=" p-5 flex gap-3">
+
+      {/* Pagination */}
+      <div className="p-5 flex justify-center gap-3">
         <button
-          className="bg-blue-200 text-blue-700 px-2 hover:bg-blue-300 py-1 rounded-md"
-          disabled={page == 1}
+          className="bg-blue-200 text-blue-700 px-3 py-1 rounded-md hover:bg-blue-300 disabled:opacity-50"
+          disabled={page === 1}
           onClick={() => setPage((page) => page - 1)}
         >
           Prev
         </button>
         <button
-          className="bg-blue-200 text-blue-700 px-2 hover:bg-blue-300 py-1 rounded-md"
+          className="bg-blue-200 text-blue-700 px-3 py-1 rounded-md hover:bg-blue-300"
           onClick={() => setPage(page + 1)}
         >
           Next
