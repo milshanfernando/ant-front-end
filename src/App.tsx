@@ -15,7 +15,7 @@ function App() {
 
       <div className="flex-1 flex flex-col relative">
         <div className="flex justify-between md:hidden p-4 z-30">
-          <img className=" h-10" src={"../public/antlogo.png"} alt="" />
+          <img className=" h-10" src={"./assets/antlogo.png"} alt="" />
           <button
             onClick={() => setMobileOpen(!mobileOpen)}
             className="w-8 h-8 flex flex-col justify-between items-center"
