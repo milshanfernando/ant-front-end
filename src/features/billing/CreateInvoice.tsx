@@ -218,7 +218,7 @@ const CreateInvoice = () => {
           <div
             id="invoice"
             ref={invoiceRef}
-            className="max-w-2xl mx-auto p-6 rounded shadow-md"
+            className="max-w-svh mx-auto p-6 rounded shadow-md"
           >
             <h2 className="font-bold text-lg mb-3">Invoice Items</h2>
             <table className="w-full border border-gray-600 rounded">
