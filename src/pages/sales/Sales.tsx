@@ -63,7 +63,7 @@ const Sales = () => {
       </div>
 
       {/* Summary Cards */}
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-4">
+      <div className="flex flex-wrap gap-4">
         <SummaryCard title="Total Sales" value={data.length} />
         <SummaryCard
           title="Revenue"
@@ -179,7 +179,7 @@ const SummaryCard = ({
   title: string;
   value: string | number;
 }) => (
-  <div className="bg-blue-950 shadow rounded-lg p-4 flex flex-col items-start">
+  <div className="bg-blue-950 shadow rounded-lg p-4 flex flex-col items-start min-w-20">
     <p className="text-amber-400 text-sm">{title}</p>
     <p className="text-lg sm:text-xl font-bold">{value}</p>
   </div>
