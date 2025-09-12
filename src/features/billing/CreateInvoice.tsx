@@ -101,7 +101,7 @@ const CreateInvoice = () => {
   return (
     <form onSubmit={handleSubmit} className="p-4 space-y-6">
       {/* Customer Info */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
         <FieldError
           error={
             touched.customerName && errors.customerName
@@ -166,6 +166,7 @@ const CreateInvoice = () => {
         </FieldError>
       </div>
 
+      {/* Search Items */}
       <input
         type="text"
         value={search}
@@ -212,58 +213,102 @@ const CreateInvoice = () => {
         </ul>
       )}
 
-      {/* Invoice Items Table */}
+      {/* Invoice Items */}
       {invoiceItems.length > 0 && (
         <div className="mt-6 space-y-4">
           <div
             id="invoice"
             ref={invoiceRef}
-            className="max-w-svh mx-auto p-6 rounded shadow-md"
+            className="w-full sm:max-w-3xl mx-auto p-3 sm:p-6 rounded shadow-md"
           >
-            <h2 className="font-bold text-lg mb-3">Invoice Items</h2>
-            <table className="w-full border border-gray-600 rounded">
-              <thead>
-                <tr>
-                  <th className="p-2 text-left">Item</th>
-                  <th className="p-2">Price</th>
-                  <th className="p-2">Quantity</th>
-                  <th className="p-2">Total</th>
-                </tr>
-              </thead>
-              <tbody>
-                {invoiceItems.map((item) => (
-                  <tr key={item._id} className="border-t">
-                    <td className="p-2">{item.name}</td>
-                    <td className="p-2 text-center">
-                      {new Intl.NumberFormat("en-LK", {
-                        style: "currency",
-                        currency: "LKR",
-                      }).format(item.price)}
-                    </td>
-                    <td className="p-2 text-center">
-                      <input
-                        type="number"
-                        min="1"
-                        value={item.quantity}
-                        onChange={(e) =>
-                          handleQuantityChange(item._id, Number(e.target.value))
-                        }
-                        className="w-16 border rounded px-2 py-1 text-center"
-                      />
-                    </td>
-                    <td className="p-2 text-center">
-                      {new Intl.NumberFormat("en-LK", {
-                        style: "currency",
-                        currency: "LKR",
-                      }).format(item.price * item.quantity)}
-                    </td>
+            <h2 className="font-bold text-base sm:text-lg mb-3">
+              Invoice Items
+            </h2>
+
+            {/* Responsive Table */}
+            <div className="hidden sm:block overflow-x-auto">
+              <table className="w-full border border-gray-600 rounded min-w-[500px]">
+                <thead>
+                  <tr>
+                    <th className="p-2 text-left">Item</th>
+                    <th className="p-2">Price</th>
+                    <th className="p-2">Quantity</th>
+                    <th className="p-2">Total</th>
                   </tr>
-                ))}
-              </tbody>
-            </table>
+                </thead>
+                <tbody>
+                  {invoiceItems.map((item) => (
+                    <tr key={item._id} className="border-t">
+                      <td className="p-2">{item.name}</td>
+                      <td className="p-2 text-center">
+                        {new Intl.NumberFormat("en-LK", {
+                          style: "currency",
+                          currency: "LKR",
+                        }).format(item.price)}
+                      </td>
+                      <td className="p-2 text-center">
+                        <input
+                          type="number"
+                          min="1"
+                          value={item.quantity}
+                          onChange={(e) =>
+                            handleQuantityChange(
+                              item._id,
+                              Number(e.target.value)
+                            )
+                          }
+                          className="w-16 border rounded px-2 py-1 text-center"
+                        />
+                      </td>
+                      <td className="p-2 text-center">
+                        {new Intl.NumberFormat("en-LK", {
+                          style: "currency",
+                          currency: "LKR",
+                        }).format(item.price * item.quantity)}
+                      </td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
+            </div>
+
+            {/* Mobile Card View */}
+            <div className="sm:hidden space-y-3">
+              {invoiceItems.map((item) => (
+                <div key={item._id} className="border rounded p-3 shadow-sm">
+                  <p className="font-semibold">{item.name}</p>
+                  <p className="text-sm">
+                    Price:{" "}
+                    {new Intl.NumberFormat("en-LK", {
+                      style: "currency",
+                      currency: "LKR",
+                    }).format(item.price)}
+                  </p>
+                  <div className="flex items-center justify-between mt-2">
+                    <label className="text-sm">Qty:</label>
+                    <input
+                      type="number"
+                      min="1"
+                      value={item.quantity}
+                      onChange={(e) =>
+                        handleQuantityChange(item._id, Number(e.target.value))
+                      }
+                      className="w-20 border rounded px-2 py-1 text-center"
+                    />
+                  </div>
+                  <p className="mt-2 font-medium">
+                    Total:{" "}
+                    {new Intl.NumberFormat("en-LK", {
+                      style: "currency",
+                      currency: "LKR",
+                    }).format(item.price * item.quantity)}
+                  </p>
+                </div>
+              ))}
+            </div>
 
             {/* Totals */}
-            <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-4">
+            <div className="mt-4 grid grid-cols-1 sm:grid-cols-2 gap-3 sm:gap-4">
               <div>
                 <Label label="Tax:">
                   <FieldError
@@ -319,7 +364,6 @@ const CreateInvoice = () => {
                   </FieldError>
                 </Label>
               </div>
-
               <div>
                 <Label label="Notes">
                   <FieldError
@@ -338,7 +382,7 @@ const CreateInvoice = () => {
               </div>
             </div>
 
-            <div className="mt-4 text-right font-bold text-lg">
+            <div className="mt-4 text-right font-bold text-base sm:text-lg">
               Total Amount:{" "}
               {new Intl.NumberFormat("en-LK", {
                 style: "currency",
@@ -347,14 +391,17 @@ const CreateInvoice = () => {
             </div>
           </div>
 
+          {/* Submit Button */}
           <button
             type="submit"
-            className="bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
+            className="w-full sm:w-auto bg-blue-600 text-white px-4 py-2 rounded hover:bg-blue-700"
           >
             {isPending ? "Submitting..." : "Save & Print"}
           </button>
         </div>
       )}
+
+      {/* Error Message */}
       {submitError && (
         <div className="mt-3 flex items-center gap-2 rounded-lg border border-red-300 bg-red-50 p-3 text-sm text-red-700 shadow-sm">
           <svg

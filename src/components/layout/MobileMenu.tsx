@@ -9,7 +9,7 @@ const MobileMenu = () => {
     }`;
   return (
     <aside className="lg:flex flex-col bg-gray-100 dark:bg-gray-950 p-5 shadow-lg border border-gray-200 dark:border-gray-800">
-      <h1 className="text-xl font-bold mb-6">Menu</h1>
+      <h1 className="text-xl font-bold mb-6 text-center">Menu</h1>
       <nav className="space-y-1 flex flex-col">
         <NavLink to="/" end className={linkClass}>
           Home
