@@ -42,6 +42,12 @@ class ApiClient<T> {
       .then((res) => res.data);
   };
 
+  getDataById = (id: string) => {
+    return axiosInstance
+      .get<T>(`${this.endpoint}/${id}`)
+      .then((res) => res.data);
+  };
+
   getSearchData = (search: string) => {
     return axiosInstance
       .get<T[]>(this.endpoint, {
